@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card System Demo - Student Life Hub</title>
+    
+    <!-- Link all CSS files -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        /* Demo-specific styles */
+        body {
+            background-color: var(--color-background);
+            padding: var(--space-lg);
+        }
+        
+        .demo-header {
+            text-align: center;
+            margin-bottom: var(--space-2xl);
+        }
+        
+        .demo-section {
+            margin-bottom: var(--space-3xl);
+        }
+        
+        .demo-section-title {
+            font-size: var(--text-2xl);
+            font-weight: var(--font-bold);
+            margin-bottom: var(--space-lg);
+            padding-bottom: var(--space-sm);
+            border-bottom: 3px solid var(--color-border);
+        }
+        
+        .demo-description {
+            background-color: var(--color-info-light);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-lg);
+            border-left: 4px solid var(--color-info);
+        }
+    </style>
+</head>
+<body>
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Demo Header -->
+    <header class="demo-header">
+        <h1>🎴 Card System Demo</h1>
+        <p class="lead">Click any card to flip and see the back!</p>
+        <p style="color: var(--color-text-secondary); margin-top: var(--space-sm);">
+            This demonstrates the universal card system with flip animations
+        </p>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="container">
+        
+        <!-- Meal Cards Section -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">🍳 Meal Cards</h2>
+            
+            <div class="demo-description">
+                <strong>Try it:</strong> Click on any meal card to flip it and see the full recipe with ingredients and instructions. Click again (or click "Back" button) to flip back.
+            </div>
+            
+            <div id="meal-cards-container" class="cards-grid">
+                <!-- Meal cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Study Cards Section -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">📚 Study Task Cards</h2>
+            
+            <div class="demo-description">
+                <strong>Try it:</strong> Study cards show techniques and tasks. Flip to see detailed instructions and tips.
+            </div>
+            
+            <div id="study-cards-container" class="cards-grid">
+                <!-- Study cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Cleaning Cards Section -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">🧹 Cleaning Task Cards</h2>
+            
+            <div class="demo-description">
+                <strong>Try it:</strong> Cleaning cards show quick info on the front and step-by-step instructions on the back.
+            </div>
+            
+            <div id="cleaning-cards-container" class="cards-grid">
+                <!-- Cleaning cards will be inserted here by JavaScript -->
+            </div>
+        </section>
+        
+        <!-- Design Notes Section -->
+        <section class="demo-section">
+            <h2 class="demo-section-title">🎨 Design Features</h2>
+            
+            <div class="demo-description">
+                <h3 style="margin-bottom: var(--space-sm);">Card Features Demonstrated:</h3>
+                <ul style="list-style: disc; padding-left: var(--space-xl); line-height: 1.8;">
+                    <li><strong>Colored Headers:</strong> Each section has its own color (Style B)</li>
+                    <li><strong>Click Anywhere to Flip:</strong> No need to find a specific button (Option A)</li>
+                    <li><strong>3D Flip Animation:</strong> 500ms smooth rotation on Y-axis</li>
+                    <li><strong>Premium Badges:</strong> Premium content marked with sparkle badge</li>
+                    <li><strong>Hover Effects:</strong> Cards lift slightly on hover</li>
+                    <li><strong>Mobile-First:</strong> Works on all screen sizes</li>
+                    <li><strong>Accessible:</strong> Keyboard navigation works (try Tab key)</li>
+                    <li><strong>Screen Reader Support:</strong> Announces flip state changes</li>
+                    <li><strong>Reduced Motion:</strong> No animation if user prefers reduced motion</li>
+                </ul>
+            </div>
+        </section>
+        
+        <!-- Back to Home -->
+        <div style="text-align: center; margin-top: var(--space-3xl);">
+            <a href="../index.html" class="btn btn-primary">← Back to Home</a>
+        </div>
+        
+    </main>
+    
+    <!-- Load JavaScript -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/components/cards.js"></script>
+    
+    <!-- Demo Script - Load and Display Cards -->
+    <script>
+        // Wait for DOM to load
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🎴 Card Demo Loading...');
+            
+            // Load and display meal cards
+            await loadMealCards();
+            
+            // Load and display study cards
+            await loadStudyCards();
+            
+            // Load and display cleaning cards
+            await loadCleaningCards();
+            
+            console.log('✅ Card Demo Loaded Successfully!');
+        });
+        
+        /**
+         * Load meal cards from JSON files
+         */
+        async function loadMealCards() {
+            try {
+                const container = document.getElementById('meal-cards-container');
+                
+                // Load free meal 1
+                const meal1Response = await fetch('../data/meals/free/sample-meal.json');
+                const meal1Data = await meal1Response.json();
+                const meal1Card = renderMealCard(meal1Data);
+                container.appendChild(meal1Card);
+                
+                // Load free meal 2
+                const meal2Response = await fetch('../data/meals/free/veggie-stir-fry.json');
+                const meal2Data = await meal2Response.json();
+                const meal2Card = renderMealCard(meal2Data);
+                container.appendChild(meal2Card);
+                
+                // Load premium meal
+                const meal3Response = await fetch('../data/meals/premium/sample-premium.json');
+                const meal3Data = await meal3Response.json();
+                const meal3Card = renderMealCard(meal3Data);
+                container.appendChild(meal3Card);
+                
+                console.log('✅ Meal cards loaded');
+            } catch (error) {
+                console.error('❌ Error loading meal cards:', error);
+                document.getElementById('meal-cards-container').innerHTML = 
+                    '<p style="color: var(--color-error);">Error loading meal cards. Check console for details.</p>';
+            }
+        }
+        
+        /**
+         * Load study cards from JSON file
+         */
+        async function loadStudyCards() {
+            try {
+                const container = document.getElementById('study-cards-container');
+                
+                const response = await fetch('../data/tasks/study-tasks.json');
+                const studyTasks = await response.json();
+                
+                // Render each study task
+                studyTasks.forEach(task => {
+                    const card = renderTaskCard(task);
+                    container.appendChild(card);
+                });
+                
+                console.log('✅ Study cards loaded');
+            } catch (error) {
+                console.error('❌ Error loading study cards:', error);
+                document.getElementById('study-cards-container').innerHTML = 
+                    '<p style="color: var(--color-error);">Error loading study cards. Check console for details.</p>';
+            }
+        }
+        
+        /**
+         * Load cleaning cards from JSON file
+         */
+        async function loadCleaningCards() {
+            try {
+                const container = document.getElementById('cleaning-cards-container');
+                
+                const response = await fetch('../data/tasks/cleaning-tasks.json');
+                const cleaningTasks = await response.json();
+                
+                // Render each cleaning task
+                cleaningTasks.forEach(task => {
+                    const card = renderTaskCard(task);
+                    container.appendChild(card);
+                });
+                
+                console.log('✅ Cleaning cards loaded');
+            } catch (error) {
+                console.error('❌ Error loading cleaning cards:', error);
+                document.getElementById('cleaning-cards-container').innerHTML = 
+                    '<p style="color: var(--color-error);">Error loading cleaning cards. Check console for details.</p>';
+            }
+        }
+    </script>
+</body>
+</html>

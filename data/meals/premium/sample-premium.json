@@ -1,0 +1,105 @@
+{
+  "id": "salmon-teriyaki",
+  "name": "Glazed Salmon Teriyaki",
+  "type": "dinner",
+  "category": "MEAL • DINNER",
+  "description": "Restaurant-quality salmon with homemade teriyaki glaze",
+  "time": 25,
+  "servings": 2,
+  "calories": 420,
+  "cost": 8.50,
+  "difficulty": "moderate",
+  "dietary": ["fish"],
+  "tags": ["japanese", "healthy", "impressive"],
+  "rating": 4.8,
+  "ratingCount": 234,
+  "image": "",
+  "ingredients": [
+    {
+      "name": "Salmon fillets",
+      "amount": "2 (150g each)",
+      "cost": 5.00
+    },
+    {
+      "name": "Soy sauce",
+      "amount": "4 tbsp",
+      "cost": 0.40
+    },
+    {
+      "name": "Mirin",
+      "amount": "2 tbsp",
+      "cost": 0.60
+    },
+    {
+      "name": "Brown sugar",
+      "amount": "2 tbsp",
+      "cost": 0.10
+    },
+    {
+      "name": "Fresh ginger",
+      "amount": "1 inch piece",
+      "cost": 0.15
+    },
+    {
+      "name": "Garlic",
+      "amount": "2 cloves",
+      "cost": 0.15
+    },
+    {
+      "name": "Sesame oil",
+      "amount": "1 tsp",
+      "cost": 0.20
+    },
+    {
+      "name": "Spring onions",
+      "amount": "2 stalks",
+      "cost": 0.40
+    },
+    {
+      "name": "Jasmine rice",
+      "amount": "200g",
+      "cost": 0.80
+    },
+    {
+      "name": "Sesame seeds",
+      "amount": "1 tbsp",
+      "cost": 0.20
+    },
+    {
+      "name": "Pak choi",
+      "amount": "200g",
+      "cost": 1.50
+    }
+  ],
+  "equipment": [
+    "Non-stick frying pan",
+    "Small saucepan",
+    "Rice cooker or pot",
+    "Brush for glazing"
+  ],
+  "instructions": [
+    "Make teriyaki sauce: combine soy sauce, mirin, sugar, minced ginger and garlic in saucepan",
+    "Simmer sauce over medium heat for 5-7 minutes until thickened, set aside",
+    "Cook rice according to package instructions",
+    "Heat sesame oil in frying pan over medium-high heat",
+    "Pat salmon dry and place skin-side down in pan",
+    "Cook for 4 minutes without moving",
+    "Flip salmon and cook 3 minutes on other side",
+    "Brush teriyaki glaze generously over salmon",
+    "Steam pak choi in a separate pan for 3 minutes",
+    "Serve salmon over rice with pak choi, drizzle remaining sauce",
+    "Garnish with sliced spring onions and sesame seeds"
+  ],
+  "tips": [
+    "Don't move salmon while cooking - this creates a crispy skin",
+    "Make extra teriyaki sauce - it keeps for 2 weeks in the fridge",
+    "Check salmon is cooked by gently pressing - it should flake easily"
+  ],
+  "nutritionInfo": {
+    "protein": "32g",
+    "carbs": "45g",
+    "fat": "15g",
+    "fiber": "3g"
+  },
+  "isPremium": true
+}

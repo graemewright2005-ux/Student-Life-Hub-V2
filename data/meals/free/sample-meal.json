@@ -1,0 +1,84 @@
+{
+  "id": "quick-pasta-carbonara",
+  "name": "Quick Pasta Carbonara",
+  "type": "dinner",
+  "category": "MEAL • DINNER",
+  "description": "A classic Italian pasta dish that's quick, creamy, and satisfying",
+  "time": 20,
+  "servings": 2,
+  "calories": 520,
+  "cost": 3.50,
+  "difficulty": "easy",
+  "dietary": ["vegetarian"],
+  "tags": ["quick", "italian", "comfort-food"],
+  "rating": 4.5,
+  "ratingCount": 127,
+  "image": "",
+  "ingredients": [
+    {
+      "name": "Spaghetti",
+      "amount": "200g",
+      "cost": 0.50
+    },
+    {
+      "name": "Eggs",
+      "amount": "2 large",
+      "cost": 0.60
+    },
+    {
+      "name": "Parmesan cheese",
+      "amount": "50g",
+      "cost": 1.20
+    },
+    {
+      "name": "Black pepper",
+      "amount": "to taste",
+      "cost": 0.10
+    },
+    {
+      "name": "Butter",
+      "amount": "30g",
+      "cost": 0.40
+    },
+    {
+      "name": "Salt",
+      "amount": "to taste",
+      "cost": 0.05
+    },
+    {
+      "name": "Garlic",
+      "amount": "2 cloves",
+      "cost": 0.15
+    },
+    {
+      "name": "Fresh parsley",
+      "amount": "small handful",
+      "cost": 0.50
+    }
+  ],
+  "equipment": [
+    "Large pot",
+    "Frying pan",
+    "Colander",
+    "Mixing bowl",
+    "Grater"
+  ],
+  "instructions": [
+    "Bring a large pot of salted water to boil",
+    "Cook spaghetti according to package instructions (usually 8-10 minutes)",
+    "While pasta cooks, beat eggs in a bowl and mix in grated parmesan",
+    "Mince garlic and sauté in butter in a large frying pan",
+    "Drain pasta, reserving 1 cup of pasta water",
+    "Remove pan from heat, add hot pasta to the garlic butter",
+    "Quickly pour in egg mixture, tossing constantly to coat pasta",
+    "Add pasta water a little at a time until creamy",
+    "Season generously with black pepper and salt",
+    "Serve immediately with extra parmesan and chopped parsley"
+  ],
+  "tips": [
+    "Work quickly when adding eggs to prevent scrambling",
+    "The pasta water helps create a creamy sauce",
+    "Use freshly grated parmesan for best flavor"
+  ],
+  "isPremium": false
+}

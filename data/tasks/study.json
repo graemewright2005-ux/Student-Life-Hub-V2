@@ -1,1 +1,74 @@
-
+[
+  {
+    "id": "pomodoro-session-1",
+    "name": "25-Minute Focus Session",
+    "type": "study",
+    "category": "STUDY • FOCUS",
+    "description": "Complete one Pomodoro cycle with 5-minute break",
+    "time": 30,
+    "difficulty": "easy",
+    "points": 10,
+    "instructions": [
+      "Choose one specific topic or task to focus on",
+      "Remove all distractions (phone, social media, etc.)",
+      "Set timer for 25 minutes",
+      "Work with complete focus until timer ends",
+      "Take a 5-minute break - stand up, stretch, drink water",
+      "Mark task as complete to earn points"
+    ],
+    "tips": [
+      "If you get distracted, note it down and return to task",
+      "Use the break - don't skip it!",
+      "After 4 Pomodoros, take a longer 15-30 minute break"
+    ],
+    "isPremium": false
+  },
+  {
+    "id": "flashcard-review",
+    "name": "Flashcard Review Session",
+    "type": "study",
+    "category": "STUDY • ACTIVE RECALL",
+    "description": "Review flashcards using active recall technique",
+    "time": 20,
+    "difficulty": "easy",
+    "points": 15,
+    "instructions": [
+      "Select a flashcard deck to review",
+      "Read the question/prompt on front of card",
+      "Try to recall the answer WITHOUT looking",
+      "Flip card to check your answer",
+      "Mark as 'Got it' or 'Need review'",
+      "Continue through deck",
+      "Review 'Need review' cards again at end"
+    ],
+    "tips": [
+      "Don't peek at the answer too quickly",
+      "Saying answers out loud helps memory",
+      "Review difficult cards more frequently"
+    ],
+    "isPremium": false
+  },
+  {
+    "id": "spaced-repetition",
+    "name": "Spaced Repetition Review",
+    "type": "study",
+    "category": "STUDY • SPACED LEARNING",
+    "description": "Review topics learned 1, 3, 7 days ago",
+    "time": 30,
+    "difficulty": "moderate",
+    "points": 20,
+    "isPremium": true,
+    "instructions": [
+      "Check what topics you learned 1 day ago - review briefly",
+      "Check what topics you learned 3 days ago - review in more detail",
+      "Check what topics you learned 7 days ago - test yourself on these",
+      "Make notes on anything you've forgotten",
+      "Mark topics that need more review"
+    ],
+    "tips": [
+      "This technique fights the forgetting curve",
+      "Older topics should be harder to recall - that's normal",
+      "The act of struggling to remember strengthens memory"
+    ]
+  }
+]

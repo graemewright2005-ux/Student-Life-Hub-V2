@@ -1,1 +1,100 @@
-
+[
+  {
+    "id": "kitchen-quick-clean",
+    "name": "Kitchen Quick Clean",
+    "type": "cleaning",
+    "category": "CLEANING • KITCHEN",
+    "room": "kitchen",
+    "frequency": "daily",
+    "time": 15,
+    "difficulty": "easy",
+    "points": 5,
+    "motivation": "So you can cook without the guilt!",
+    "equipment": [
+      "Washing up liquid",
+      "Sponge",
+      "Kitchen cloth",
+      "Surface spray"
+    ],
+    "instructions": [
+      "Wash all dishes and put away",
+      "Wipe down all countertops",
+      "Clean the hob/stove",
+      "Sweep floor",
+      "Take out rubbish if needed"
+    ],
+    "tips": [
+      "Clean as you cook to prevent buildup",
+      "Hot water helps cut through grease",
+      "Don't forget to wring out sponges after use"
+    ],
+    "isPremium": false
+  },
+  {
+    "id": "bathroom-deep-clean",
+    "name": "Bathroom Deep Clean",
+    "type": "cleaning",
+    "category": "CLEANING • BATHROOM",
+    "room": "bathroom",
+    "frequency": "weekly",
+    "time": 30,
+    "difficulty": "moderate",
+    "points": 15,
+    "motivation": "For a spa-like sanctuary!",
+    "equipment": [
+      "Bathroom cleaner",
+      "Toilet cleaner",
+      "Scrubbing brush",
+      "Cloths",
+      "Rubber gloves"
+    ],
+    "instructions": [
+      "Put on rubber gloves",
+      "Spray toilet with cleaner, let it sit",
+      "Spray sink, bath, and shower with bathroom cleaner",
+      "Scrub toilet bowl and flush",
+      "Wipe down sink, taps, and bath",
+      "Clean mirror with glass cleaner",
+      "Mop floor",
+      "Put out fresh towels"
+    ],
+    "tips": [
+      "Let cleaning products sit for a few minutes before scrubbing",
+      "Work from top to bottom (dirt falls down)",
+      "Ventilate well - open a window"
+    ],
+    "isPremium": false
+  },
+  {
+    "id": "bedroom-refresh",
+    "name": "Bedroom Refresh",
+    "type": "cleaning",
+    "category": "CLEANING • BEDROOM",
+    "room": "bedroom",
+    "frequency": "weekly",
+    "time": 20,
+    "difficulty": "easy",
+    "points": 10,
+    "motivation": "For better sleep and a clear mind!",
+    "equipment": [
+      "Vacuum or broom",
+      "Fresh bed sheets",
+      "Duster",
+      "Laundry basket"
+    ],
+    "instructions": [
+      "Collect all dirty clothes into laundry basket",
+      "Strip bed and put on fresh sheets",
+      "Dust all surfaces",
+      "Organize desk/bedside table",
+      "Vacuum or sweep floor",
+      "Open window for 10 minutes"
+    ],
+    "tips": [
+      "Change sheets weekly for better sleep",
+      "Declutter before cleaning",
+      "Make your bed every morning - it sets the tone"
+    ],
+    "isPremium": false
+  }
+]

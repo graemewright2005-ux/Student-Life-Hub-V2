@@ -1,0 +1,76 @@
+{
+  "id": "veggie-stir-fry",
+  "name": "Easy Veggie Stir-Fry",
+  "type": "dinner",
+  "category": "MEAL • DINNER",
+  "description": "Colorful, healthy stir-fry packed with vegetables",
+  "time": 15,
+  "servings": 2,
+  "calories": 280,
+  "cost": 4.00,
+  "difficulty": "easy",
+  "dietary": ["vegetarian", "vegan"],
+  "tags": ["healthy", "quick", "asian"],
+  "rating": 4.3,
+  "ratingCount": 89,
+  "image": "",
+  "ingredients": [
+    {
+      "name": "Mixed vegetables (peppers, broccoli, carrots)",
+      "amount": "400g",
+      "cost": 2.50
+    },
+    {
+      "name": "Soy sauce",
+      "amount": "3 tbsp",
+      "cost": 0.30
+    },
+    {
+      "name": "Garlic",
+      "amount": "3 cloves",
+      "cost": 0.20
+    },
+    {
+      "name": "Ginger",
+      "amount": "1 inch piece",
+      "cost": 0.15
+    },
+    {
+      "name": "Vegetable oil",
+      "amount": "2 tbsp",
+      "cost": 0.10
+    },
+    {
+      "name": "Rice or noodles",
+      "amount": "200g",
+      "cost": 0.60
+    },
+    {
+      "name": "Sesame seeds",
+      "amount": "1 tsp",
+      "cost": 0.15
+    }
+  ],
+  "equipment": [
+    "Wok or large frying pan",
+    "Knife",
+    "Chopping board",
+    "Wooden spoon"
+  ],
+  "instructions": [
+    "Prepare all vegetables by chopping into bite-sized pieces",
+    "Mince garlic and ginger finely",
+    "Heat oil in wok over high heat until smoking",
+    "Add garlic and ginger, stir-fry for 30 seconds",
+    "Add harder vegetables first (carrots, broccoli), stir-fry 2 minutes",
+    "Add softer vegetables (peppers), stir-fry another 2 minutes",
+    "Pour in soy sauce and toss everything together",
+    "Serve over rice or noodles, sprinkle with sesame seeds"
+  ],
+  "tips": [
+    "Keep everything moving in the wok - don't let it burn",
+    "High heat is key for good stir-fry",
+    "Prep all ingredients before you start cooking"
+  ],
+  "isPremium": false
+}
