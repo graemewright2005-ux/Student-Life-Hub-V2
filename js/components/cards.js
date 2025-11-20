@@ -18,48 +18,52 @@ function renderMealCard(mealData) {
     const card = createElement('div', {
         class: 'card meal-card',
         'data-card-id': mealData.id,
-        'data-card-type': 'meal'
+        'data-card-type': 'meal',
+        'tabindex': '0',
+        'role': 'button',
+        'aria-label': `${mealData.name} recipe card. Click to flip and see details.`
     });
+    
+    // Premium badge if premium
+    if (mealData.isPremium) {
+        const premiumBadge = createElement('span', {
+            class: 'card-premium-badge',
+            'aria-label': 'Premium content'
+        }, '✨ Premium');
+        card.appendChild(premiumBadge);
+    }
     
     // Create flip container
     const flipContainer = createElement('div', { class: 'card-flip-container' });
     const flipInner = createElement('div', { class: 'card-flip-inner' });
     
-    // Create FRONT of card
+    // ==================== FRONT OF CARD ====================
     const cardFront = createElement('div', { class: 'card-front' });
     
-    // Header with category
+    // Header
     const header = createElement('div', { 
         class: 'card-header meals' 
     }, mealData.category);
     
-    // Premium badge if premium
-    if (mealData.isPremium) {
-        const premiumBadge = createElement('span', {
-            class: 'card-premium-badge'
-        }, '✨ Premium');
-        card.appendChild(premiumBadge);
-    }
-    
-    // Card body
+    // Body
     const body = createElement('div', { class: 'card-body' });
     
     // Title
     const title = createElement('h3', { class: 'card-title' }, mealData.name);
     
-    // Meta information (time, calories, cost)
+    // Meta information
     const meta = createElement('div', { class: 'card-meta' });
     meta.innerHTML = `
         <span class="card-meta-item">
-            <span class="card-meta-icon">⏱️</span>
+            <span class="card-meta-icon" aria-hidden="true">⏱️</span>
             <span>${mealData.time}m</span>
         </span>
         <span class="card-meta-item">
-            <span class="card-meta-icon">🔥</span>
+            <span class="card-meta-icon" aria-hidden="true">🔥</span>
             <span>${mealData.calories} cal</span>
         </span>
         <span class="card-meta-item card-cost">
-            <span class="card-meta-icon card-cost-icon">£</span>
+            <span class="card-meta-icon card-cost-icon" aria-hidden="true">£</span>
             <span>${mealData.cost.toFixed(2)}</span>
         </span>
     `;
@@ -80,11 +84,12 @@ function renderMealCard(mealData) {
     
     // Rating
     const rating = createElement('div', { class: 'card-rating' });
-    const stars = createElement('div', { class: 'card-stars' });
+    const stars = createElement('div', { class: 'card-stars', 'aria-label': `Rating: ${mealData.rating} out of 5 stars` });
     
     for (let i = 1; i <= 5; i++) {
         const star = createElement('span', {
-            class: i <= Math.floor(mealData.rating) ? 'card-star' : 'card-star empty'
+            class: i <= Math.floor(mealData.rating) ? 'card-star' : 'card-star empty',
+            'aria-hidden': 'true'
         }, '⭐');
         stars.appendChild(star);
     }
@@ -96,21 +101,23 @@ function renderMealCard(mealData) {
     rating.appendChild(stars);
     rating.appendChild(ratingCount);
     
+    // Flip hint
+    const flipHint = createElement('span', {
+        class: 'card-flip-hint',
+        'aria-hidden': 'true'
+    }, '↻ Click to view recipe');
+    
     // Assemble front
     body.appendChild(title);
     body.appendChild(meta);
     body.appendChild(tags);
     body.appendChild(rating);
-    
-    const flipHint = createElement('span', {
-        class: 'card-flip-hint'
-    }, '↻ Click to view recipe');
     body.appendChild(flipHint);
     
     cardFront.appendChild(header);
     cardFront.appendChild(body);
     
-    // Create BACK of card
+    // ==================== BACK OF CARD ====================
     const cardBack = createElement('div', { class: 'card-back' });
     
     const backHeader = createElement('div', { 
@@ -119,16 +126,14 @@ function renderMealCard(mealData) {
     
     const backBody = createElement('div', { class: 'card-body' });
     
-    // Title on back
+    // Title
     const backTitle = createElement('h3', { class: 'card-title' }, mealData.name);
     backBody.appendChild(backTitle);
     
-    // Ingredients section
+    // Ingredients
     const ingredientsSection = createElement('div', { class: 'card-section' });
-    const ingredientsTitle = createElement('h4', {
-        class: 'card-section-title'
-    });
-    ingredientsTitle.innerHTML = '<span class="card-section-icon">🥘</span> Ingredients';
+    const ingredientsTitle = createElement('h4', { class: 'card-section-title' });
+    ingredientsTitle.innerHTML = '<span class="card-section-icon" aria-hidden="true">🥘</span> Ingredients';
     
     const ingredientsList = createElement('ul', { class: 'card-list' });
     mealData.ingredients.forEach(ingredient => {
@@ -142,12 +147,10 @@ function renderMealCard(mealData) {
     ingredientsSection.appendChild(ingredientsList);
     backBody.appendChild(ingredientsSection);
     
-    // Instructions section
+    // Instructions
     const instructionsSection = createElement('div', { class: 'card-section' });
-    const instructionsTitle = createElement('h4', {
-        class: 'card-section-title'
-    });
-    instructionsTitle.innerHTML = '<span class="card-section-icon">📝</span> Instructions';
+    const instructionsTitle = createElement('h4', { class: 'card-section-title' });
+    instructionsTitle.innerHTML = '<span class="card-section-icon" aria-hidden="true">📝</span> Instructions';
     
     const instructionsList = createElement('ol', { class: 'card-list card-list-numbered' });
     mealData.instructions.forEach(instruction => {
@@ -161,24 +164,42 @@ function renderMealCard(mealData) {
     instructionsSection.appendChild(instructionsList);
     backBody.appendChild(instructionsSection);
     
-    console.log('Creating footer for meal:', mealData.name);
-    // Footer with actions
+    // Tips if available
+    if (mealData.tips && mealData.tips.length > 0) {
+        const tipsSection = createElement('div', { class: 'card-section' });
+        const tipsTitle = createElement('h4', { class: 'card-section-title' });
+        tipsTitle.innerHTML = '<span class="card-section-icon" aria-hidden="true">💡</span> Tips';
+        
+        const tipsList = createElement('ul', { class: 'card-list' });
+        mealData.tips.forEach(tip => {
+            const item = createElement('li', {
+                class: 'card-list-item'
+            }, tip);
+            tipsList.appendChild(item);
+        });
+        
+        tipsSection.appendChild(tipsTitle);
+        tipsSection.appendChild(tipsList);
+        backBody.appendChild(tipsSection);
+    }
+    
+    // Footer with buttons
     const footer = createElement('div', { class: 'card-footer' });
     footer.innerHTML = `
-        <button class="btn btn-secondary btn-sm" onclick="flipCard(this)">
+        <button class="btn btn-secondary btn-sm" onclick="flipCard(this)" aria-label="Flip card back to front">
             ← Back
         </button>
-        <button class="btn btn-primary btn-sm" onclick="addToPlanner('${mealData.id}')">
+        <button class="btn btn-primary btn-sm" onclick="addToPlanner('${mealData.id}')" aria-label="Add ${mealData.name} to planner">
             Add to Planner
         </button>
     `;
     
+    // Assemble back
     cardBack.appendChild(backHeader);
     cardBack.appendChild(backBody);
     cardBack.appendChild(footer);
-    console.log('Footer created for:', mealData.id, footer);
     
-    // Assemble everything
+    // ==================== ASSEMBLE CARD ====================
     flipInner.appendChild(cardFront);
     flipInner.appendChild(cardBack);
     flipContainer.appendChild(flipInner);
@@ -187,8 +208,16 @@ function renderMealCard(mealData) {
     // Add click to flip
     card.addEventListener('click', function(e) {
         // Don't flip if clicking buttons
-        if (e.target.tagName === 'BUTTON') return;
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
         toggleCardFlip(card);
+    });
+    
+    // Keyboard accessibility
+    card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCardFlip(card);
+        }
     });
     
     return card;
@@ -207,16 +236,28 @@ function renderTaskCard(taskData) {
     const card = createElement('div', {
         class: 'card task-card',
         'data-card-id': taskData.id,
-        'data-card-type': taskData.type
+        'data-card-type': taskData.type,
+        'tabindex': '0',
+        'role': 'button',
+        'aria-label': `${taskData.name} task card. Click to flip and see details.`
     });
+    
+    // Premium badge
+    if (taskData.isPremium) {
+        const premiumBadge = createElement('span', {
+            class: 'card-premium-badge',
+            'aria-label': 'Premium content'
+        }, '✨ Premium');
+        card.appendChild(premiumBadge);
+    }
     
     const flipContainer = createElement('div', { class: 'card-flip-container' });
     const flipInner = createElement('div', { class: 'card-flip-inner' });
     
-    // FRONT of card
+    // ==================== FRONT ====================
     const cardFront = createElement('div', { class: 'card-front' });
     
-    // Determine header color based on type
+    // Header color based on type
     let headerClass = 'card-header';
     if (taskData.type === 'study') headerClass += ' study';
     if (taskData.type === 'cleaning') headerClass += ' cleaning';
@@ -224,32 +265,24 @@ function renderTaskCard(taskData) {
     
     const header = createElement('div', { class: headerClass }, taskData.category);
     
-    // Premium badge
-    if (taskData.isPremium) {
-        const premiumBadge = createElement('span', {
-            class: 'card-premium-badge'
-        }, '✨ Premium');
-        card.appendChild(premiumBadge);
-    }
-    
     const body = createElement('div', { class: 'card-body' });
     
     const title = createElement('h3', { class: 'card-title' }, taskData.name);
     
-    // Meta info
+    // Meta
     const meta = createElement('div', { class: 'card-meta' });
     meta.innerHTML = `
         <span class="card-meta-item">
-            <span class="card-meta-icon">⏱️</span>
+            <span class="card-meta-icon" aria-hidden="true">⏱️</span>
             <span>${taskData.time}m</span>
         </span>
         <span class="card-meta-item">
-            <span class="card-meta-icon">⭐</span>
+            <span class="card-meta-icon" aria-hidden="true">⭐</span>
             <span>${taskData.points} points</span>
         </span>
     `;
     
-    // Difficulty tag
+    // Difficulty
     const difficultyTag = createElement('span', {
         class: `card-tag ${taskData.difficulty}`
     }, capitalize(taskData.difficulty));
@@ -257,20 +290,21 @@ function renderTaskCard(taskData) {
     // Description
     const description = createElement('p', {}, taskData.description || taskData.motivation);
     
+    const flipHint = createElement('span', {
+        class: 'card-flip-hint',
+        'aria-hidden': 'true'
+    }, '↻ Click for instructions');
+    
     body.appendChild(title);
     body.appendChild(meta);
     body.appendChild(difficultyTag);
     body.appendChild(description);
-    
-    const flipHint = createElement('span', {
-        class: 'card-flip-hint'
-    }, '↻ Click for instructions');
     body.appendChild(flipHint);
     
     cardFront.appendChild(header);
     cardFront.appendChild(body);
     
-    // BACK of card
+    // ==================== BACK ====================
     const cardBack = createElement('div', { class: 'card-back' });
     
     const backHeader = createElement('div', { class: headerClass }, taskData.category);
@@ -281,10 +315,8 @@ function renderTaskCard(taskData) {
     
     // Instructions
     const instructionsSection = createElement('div', { class: 'card-section' });
-    const instructionsTitle = createElement('h4', {
-        class: 'card-section-title'
-    });
-    instructionsTitle.innerHTML = '<span class="card-section-icon">📝</span> Instructions';
+    const instructionsTitle = createElement('h4', { class: 'card-section-title' });
+    instructionsTitle.innerHTML = '<span class="card-section-icon" aria-hidden="true">📝</span> Instructions';
     
     const instructionsList = createElement('ol', { class: 'card-list card-list-numbered' });
     taskData.instructions.forEach(instruction => {
@@ -298,13 +330,11 @@ function renderTaskCard(taskData) {
     instructionsSection.appendChild(instructionsList);
     backBody.appendChild(instructionsSection);
     
-    // Tips if available
+    // Tips
     if (taskData.tips && taskData.tips.length > 0) {
         const tipsSection = createElement('div', { class: 'card-section' });
-        const tipsTitle = createElement('h4', {
-            class: 'card-section-title'
-        });
-        tipsTitle.innerHTML = '<span class="card-section-icon">💡</span> Tips';
+        const tipsTitle = createElement('h4', { class: 'card-section-title' });
+        tipsTitle.innerHTML = '<span class="card-section-icon" aria-hidden="true">💡</span> Tips';
         
         const tipsList = createElement('ul', { class: 'card-list' });
         taskData.tips.forEach(tip => {
@@ -322,10 +352,10 @@ function renderTaskCard(taskData) {
     // Footer
     const footer = createElement('div', { class: 'card-footer' });
     footer.innerHTML = `
-        <button class="btn btn-secondary btn-sm" onclick="flipCard(this)">
+        <button class="btn btn-secondary btn-sm" onclick="flipCard(this)" aria-label="Flip card back to front">
             ← Back
         </button>
-        <button class="btn btn-success btn-sm" onclick="completeTask('${taskData.id}')">
+        <button class="btn btn-success btn-sm" onclick="completeTask('${taskData.id}')" aria-label="Complete ${taskData.name} task">
             ✓ Complete
         </button>
     `;
@@ -334,16 +364,24 @@ function renderTaskCard(taskData) {
     cardBack.appendChild(backBody);
     cardBack.appendChild(footer);
     
-    // Assemble
+    // ==================== ASSEMBLE ====================
     flipInner.appendChild(cardFront);
     flipInner.appendChild(cardBack);
     flipContainer.appendChild(flipInner);
     card.appendChild(flipContainer);
     
-    // Add click to flip
+    // Click to flip
     card.addEventListener('click', function(e) {
-        if (e.target.tagName === 'BUTTON') return;
+        if (e.target.tagName === 'BUTTON' || e.target.closest('button')) return;
         toggleCardFlip(card);
+    });
+    
+    // Keyboard
+    card.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            toggleCardFlip(card);
+        }
     });
     
     return card;
@@ -378,31 +416,29 @@ function flipCard(button) {
 }
 
 // ============================================
-// PLACEHOLDER FUNCTIONS (TO BE IMPLEMENTED)
+// PLACEHOLDER FUNCTIONS
 // ============================================
 
 /**
- * Add meal to planner (placeholder)
+ * Add meal to planner
  * @param {string} mealId - Meal ID
  */
 function addToPlanner(mealId) {
     console.log('Adding to planner:', mealId);
-    // TODO: Implement in Theme 2 (Meals section)
     alert('Adding to planner: ' + mealId + '\n(This will be implemented in the Meals section)');
 }
 
 /**
- * Complete task and award points (placeholder)
+ * Complete task and award points
  * @param {string} taskId - Task ID
  */
 function completeTask(taskId) {
     console.log('Completing task:', taskId);
-    // TODO: Implement in Theme 1.4 (Gamification)
     alert('Task completed: ' + taskId + '\n(Points will be awarded when gamification is implemented)');
 }
 
 /**
- * Announce message to screen readers
+ * Announce to screen readers
  * @param {string} message - Message to announce
  */
 function announceToScreenReader(message) {
@@ -414,7 +450,6 @@ function announceToScreenReader(message) {
     
     document.body.appendChild(announcement);
     
-    // Remove after announced
     setTimeout(() => {
         document.body.removeChild(announcement);
     }, 1000);

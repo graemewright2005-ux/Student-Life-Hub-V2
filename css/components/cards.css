@@ -1,54 +1,50 @@
 /*
-  CARD COMPONENTS WITH FLIP ANIMATION
-  Purpose: Universal card system for meals, tasks, study, legal, support
-  Card Style: B (Header style with colored headers)
-  Flip: A (Click anywhere to flip)
-  Includes: Front/back views, tab-colored headers, premium indicators
+  UNIVERSAL CARD SYSTEM
+  Purpose: Flip cards for meals, tasks, and resources
+  Supports: Front/back content, premium badges, responsive design
 */
 
 /* ============================================
-   BASE CARD CONTAINER
+   CARD CONTAINER
    ============================================ */
 
 .card {
-    background-color: var(--color-surface);
+    background-color: var(--color-background);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
-    overflow: hidden;
+    overflow: visible;
     transition: all var(--transition-fast);
     cursor: pointer;
     position: relative;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 400px; /* Fixed height for consistent flipping */
 }
 
 .card:hover {
+    transform: translateY(-4px);
     box-shadow: var(--shadow-lg);
-    transform: translateY(-2px);
 }
 
-/* Prevent hover effect on flipped cards */
-.card.flipped:hover {
-    transform: none;
+.card:focus {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 /* ============================================
-   CARD FLIP CONTAINER (3D Flip Animation)
+   CARD FLIP CONTAINER
    ============================================ */
 
 .card-flip-container {
-    perspective: 1000px;
+    position: relative;
     width: 100%;
     height: 100%;
-    min-height: 280px;
+    perspective: 1000px;
 }
 
 .card-flip-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform var(--transition-slow);
+    transition: transform 0.6s;
     transform-style: preserve-3d;
 }
 
@@ -57,70 +53,84 @@
     transform: rotateY(180deg);
 }
 
-/* Front and back faces */
+/* Disable flip animation if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .card-flip-inner {
+        transition: none;
+    }
+}
+
+/* ============================================
+   CARD FRONT & BACK
+   ============================================ */
+
 .card-front,
 .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+}
+
+.card-front {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-back {
     transform: rotateY(180deg);
     display: flex;
     flex-direction: column;
-    overflow: hidden;
 }
 
 /* ============================================
    CARD HEADER (Colored section at top)
    ============================================ */
-/* Ensure header doesn't shrink on card back */
-.card-back .card-header {
-    flex-shrink: 0;
-}
+
 .card-header {
     padding: var(--space-sm) var(--space-md);
-    background-color: var(--color-primary);
     color: var(--color-text-inverse);
-    font-size: var(--text-xs);
     font-weight: var(--font-bold);
+    font-size: var(--text-sm);
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    flex-shrink: 0;
 }
 
-/* Tab-colored headers */
-.card-header.study {
-    background-color: var(--color-study);
-}
-
+/* Section-specific header colors */
 .card-header.meals {
-    background-color: var(--color-meals);
+    background: linear-gradient(135deg, var(--color-meals) 0%, var(--color-meals-dark) 100%);
+}
+
+.card-header.study {
+    background: linear-gradient(135deg, var(--color-study) 0%, var(--color-study-dark) 100%);
 }
 
 .card-header.cleaning {
-    background-color: var(--color-cleaning);
-}
-
-.card-header.budget {
-    background-color: var(--color-budget);
+    background: linear-gradient(135deg, var(--color-cleaning) 0%, var(--color-cleaning-dark) 100%);
 }
 
 .card-header.diy {
-    background-color: var(--color-diy);
+    background: linear-gradient(135deg, var(--color-diy) 0%, var(--color-diy-dark) 100%);
+}
+
+.card-header.budget {
+    background: linear-gradient(135deg, var(--color-budget) 0%, var(--color-budget-dark) 100%);
 }
 
 .card-header.support {
-    background-color: var(--color-support);
+    background: linear-gradient(135deg, var(--color-support) 0%, var(--color-support-dark) 100%);
 }
 
 .card-header.legal {
-    background-color: var(--color-legal);
+    background: linear-gradient(135deg, var(--color-legal) 0%, var(--color-legal-dark) 100%);
 }
 
 .card-header.uni {
-    background-color: var(--color-uni);
+    background: linear-gradient(135deg, var(--color-uni) 0%, var(--color-uni-dark) 100%);
 }
 
 /* ============================================
@@ -128,11 +138,18 @@
    ============================================ */
 
 .card-body {
-    padding: var(--space-lg);
+    padding: var(--space-md);
     flex: 1;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: var(--space-md);
+    gap: var(--space-sm);
+}
+
+/* Card back body needs scrolling */
+.card-back .card-body {
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* ============================================
@@ -143,92 +160,109 @@
     font-size: var(--text-xl);
     font-weight: var(--font-bold);
     color: var(--color-text-primary);
-    margin: 0;
+    margin: 0 0 var(--space-sm) 0;
     line-height: 1.3;
 }
 
 /* ============================================
-   CARD META (Icons with info: time, calories, etc)
+   CARD META (Time, calories, cost, etc.)
    ============================================ */
 
 .card-meta {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--space-md);
-    font-size: var(--text-sm);
-    color: var(--color-text-secondary);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
 }
 
 .card-meta-item {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
 }
 
 .card-meta-icon {
-    font-size: 18px;
+    font-size: 16px;
+}
+
+.card-cost {
+    color: var(--color-success);
+    font-weight: var(--font-semibold);
+}
+
+.card-cost-icon {
+    font-weight: var(--font-bold);
 }
 
 /* ============================================
-   CARD TAGS/LABELS
+   CARD TAGS
    ============================================ */
 
 .card-tags {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--space-xs);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-sm);
 }
 
 .card-tag {
-    display: inline-block;
-    padding: var(--space-xs) var(--space-sm);
-    background-color: var(--color-surface-dark);
-    color: var(--color-text-secondary);
+    padding: 4px var(--space-sm);
+    border-radius: var(--radius-full);
     font-size: var(--text-xs);
     font-weight: var(--font-semibold);
-    border-radius: var(--radius-full);
+    text-transform: capitalize;
 }
 
 /* Dietary tags */
+.card-tag.vegetarian {
+    background-color: var(--color-success-light);
+    color: var(--color-success-dark);
+}
+
 .card-tag.vegan {
     background-color: var(--color-cleaning-light);
     color: var(--color-cleaning-dark);
 }
 
-.card-tag.vegetarian {
-    background-color: var(--color-cleaning-light);
-    color: var(--color-cleaning-dark);
+.card-tag.gluten-free,
+.card-tag.dairy-free {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning-dark);
 }
 
-.card-tag.gluten-free {
-    background-color: var(--color-warning-light);
-    color: var(--color-warning);
+.card-tag.fish,
+.card-tag.meat {
+    background-color: var(--color-meals-light);
+    color: var(--color-meals-dark);
 }
 
 /* Difficulty tags */
 .card-tag.easy {
     background-color: var(--color-success-light);
-    color: var(--color-success);
+    color: var(--color-success-dark);
 }
 
 .card-tag.moderate {
     background-color: var(--color-warning-light);
-    color: var(--color-warning);
+    color: var(--color-warning-dark);
 }
 
 .card-tag.difficult {
     background-color: var(--color-error-light);
-    color: var(--color-error);
+    color: var(--color-error-dark);
 }
 
 /* ============================================
-   CARD RATING (Stars)
+   CARD RATING
    ============================================ */
 
 .card-rating {
     display: flex;
     align-items: center;
     gap: var(--space-xs);
+    margin-top: auto;
 }
 
 .card-stars {
@@ -237,95 +271,22 @@
 }
 
 .card-star {
-    color: var(--color-points);
     font-size: 16px;
+    color: var(--color-warning);
 }
 
 .card-star.empty {
-    color: var(--color-border);
+    opacity: 0.3;
 }
 
 .card-rating-count {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
     color: var(--color-text-tertiary);
 }
 
 /* ============================================
-   CARD FOOTER (Actions)
+   CARD SECTIONS (Back content)
    ============================================ */
-
-.card-footer {
-    padding: var(--space-md);
-    border-top: 1px solid var(--color-border);
-    background-color: #FFD700;
-    display: flex;
-    gap: var(--space-sm);
-    justify-content: space-between;
-    align-items: center;
-    min-height: 60px;
-    flex-shrink: 0;
-}
-
-.card-footer .btn {
-    flex: 1;
-    font-size: var(--text-sm);
-    padding: var(--space-sm);
-}
-
-/* ============================================
-   PREMIUM INDICATOR
-   ============================================ */
-
-.card-premium-badge {
-    position: absolute;
-    top: var(--space-md);
-    right: var(--space-md);
-    background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-    color: var(--color-text-inverse);
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-full);
-    font-size: var(--text-xs);
-    font-weight: var(--font-bold);
-    text-transform: uppercase;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    box-shadow: var(--shadow-md);
-    z-index: 10;
-}
-
-/* Text is now added in JavaScript, not CSS */
-
-/* Locked overlay for premium cards */
-.card-premium-locked::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
-    pointer-events: none;
-}
-
-.card-premium-locked .card-premium-unlock {
-    position: absolute;
-    bottom: var(--space-lg);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
-}
-
-/* ============================================
-   CARD BACK CONTENT (Detailed view)
-   ============================================ */
-
-.card-back .card-body {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: var(--space-md);
-}
 
 .card-section {
     margin-bottom: var(--space-lg);
@@ -349,7 +310,10 @@
     font-size: 20px;
 }
 
-/* Lists on card back */
+/* ============================================
+   CARD LISTS (Ingredients, instructions)
+   ============================================ */
+
 .card-list {
     list-style: none;
     padding: 0;
@@ -358,140 +322,124 @@
 
 .card-list-item {
     padding: var(--space-xs) 0;
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
 }
 
-.card-list-item::before {
-    content: "•";
-    color: var(--color-primary);
-    font-weight: var(--font-bold);
-    flex-shrink: 0;
+.card-list-item:not(:last-child) {
+    border-bottom: 1px solid var(--color-border);
 }
 
 /* Numbered lists */
 .card-list-numbered {
-    counter-reset: card-counter;
+    counter-reset: item;
+}
+
+.card-list-numbered .card-list-item {
+    counter-increment: item;
+    padding-left: var(--space-lg);
+    position: relative;
 }
 
 .card-list-numbered .card-list-item::before {
-    counter-increment: card-counter;
-    content: counter(card-counter) ".";
-}
-
-/* ============================================
-   MEAL CARD SPECIFIC STYLES
-   ============================================ */
-
-.meal-card .card-image {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-}
-
-.meal-card .card-cost {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    font-weight: var(--font-bold);
-    color: var(--color-cleaning);
-}
-
-.meal-card .card-cost-icon {
-    color: var(--color-cleaning);
-}
-
-/* ============================================
-   TASK CARD SPECIFIC STYLES
-   ============================================ */
-
-.task-card .card-frequency {
-    display: inline-block;
-    padding: var(--space-xs) var(--space-sm);
-    background-color: var(--color-info-light);
-    color: var(--color-info);
-    font-size: var(--text-xs);
-    font-weight: var(--font-semibold);
-    border-radius: var(--radius-sm);
-}
-
-.task-card .card-duration {
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    color: var(--color-text-secondary);
-}
-
-/* ============================================
-   STUDY CARD SPECIFIC STYLES
-   ============================================ */
-
-.study-card .card-progress {
-    width: 100%;
-    height: 8px;
-    background-color: var(--color-surface-dark);
-    border-radius: var(--radius-full);
-    overflow: hidden;
-}
-
-.study-card .card-progress-bar {
-    height: 100%;
-    background-color: var(--color-study);
-    border-radius: var(--radius-full);
-    transition: width var(--transition-normal);
-}
-
-/* ============================================
-   LEGAL/SUPPORT CARD SPECIFIC STYLES
-   ============================================ */
-
-.info-card .card-contact {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
-    padding: var(--space-md);
-    background-color: var(--color-surface-dark);
-    border-radius: var(--radius-md);
-}
-
-.info-card .card-contact-item {
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
-    font-weight: var(--font-medium);
-}
-
-.info-card .card-contact-icon {
-    width: 32px;
-    height: 32px;
-    background-color: var(--color-support);
+    content: counter(item);
+    position: absolute;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background-color: var(--color-primary);
     color: var(--color-text-inverse);
-    border-radius: var(--radius-full);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    flex-shrink: 0;
 }
 
 /* ============================================
-   CARD GRID LAYOUTS
+   CARD FOOTER (Actions)
    ============================================ */
 
-/* Responsive card grid */
-.cards-grid {
-    display: grid;
-    gap: var(--space-lg);
-    grid-template-columns: 1fr;
+.card-footer {
+    padding: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    display: flex;
+    gap: var(--space-sm);
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-/* 2 columns on tablet */
-@media (min-width: 640px) {
+.card-footer .btn {
+    flex: 1;
+}
+
+/* ============================================
+   PREMIUM BADGE
+   ============================================ */
+
+.card-premium-badge {
+    position: absolute;
+    top: var(--space-md);
+    right: var(--space-md);
+    background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+    color: var(--color-text-inverse);
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+}
+
+/* ============================================
+   FLIP HINT
+   ============================================ */
+
+.card-flip-hint {
+    font-size: var(--text-xs);
+    color: var(--color-text-tertiary);
+    text-align: center;
+    margin-top: auto;
+    padding-top: var(--space-sm);
+}
+
+/* ============================================
+   CARDS GRID LAYOUT
+   ============================================ */
+
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+/* Mobile: Single column */
+@media (max-width: 639px) {
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .card {
+        height: 380px;
+    }
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 640px) and (max-width: 1023px) {
     .cards-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* 3 columns on desktop */
+/* Desktop: 3 columns */
 @media (min-width: 1024px) {
     .cards-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -499,58 +447,29 @@
 }
 
 /* ============================================
-   CARD HOVER HINT (Shows it's flippable)
+   ACCESSIBILITY
    ============================================ */
 
-.card-flip-hint {
+/* Screen reader only text */
+.sr-only {
     position: absolute;
-    bottom: var(--space-sm);
-    right: var(--space-sm);
-    font-size: var(--text-xs);
-    color: var(--color-text-tertiary);
-    display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    opacity: 0;
-    transition: opacity var(--transition-fast);
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
 }
 
-.card:hover .card-flip-hint {
-    opacity: 1;
+/* Focus visible for keyboard navigation */
+.card:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 4px;
 }
 
-.card.flipped .card-flip-hint {
-    opacity: 0;
-}
-
-/* ============================================
-   ACCESSIBILITY: Reduced Motion Support
-   ============================================ */
-
-@media (prefers-reduced-motion: reduce) {
-    .card-flip-inner {
-        transition: none;
-    }
-    
-    .card.flipped .card-flip-inner {
-        transform: none;
-    }
-    
-    /* Instead of flipping, just hide/show */
-    .card-front {
-        display: block;
-    }
-    
-    .card-back {
-        display: none;
-        transform: none;
-    }
-    
-    .card.flipped .card-front {
-        display: none;
-    }
-    
-    .card.flipped .card-back {
-        display: block;
-    }
+.card-footer .btn:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
 }
