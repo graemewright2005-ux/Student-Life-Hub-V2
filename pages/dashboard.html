@@ -3,941 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Student Life Hub - Your daily dashboard for managing student life">
+    <meta name="description" content="Your personal student dashboard - track progress, view tasks, and get smart suggestions">
     <title>Dashboard | Student Life Hub</title>
     
-    <style>
-        :root {
-            /* Your established color palette */
-            --color-study: #3B82F6;
-            --color-meals: #F97316;
-            --color-cleaning: #10B981;
-            --color-budget: #8B5CF6;
-            --color-diy: #F59E0B;
-            --color-support: #14B8A6;
-            --color-legal: #1E40AF;
-            --color-uni: #EC4899;
-            
-            /* Base colors */
-            --color-bg: #F8FAFC;
-            --color-surface: #FFFFFF;
-            --color-text-primary: #1E293B;
-            --color-text-secondary: #64748B;
-            --color-border: #E2E8F0;
-            --color-premium: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
-            
-            /* Spacing */
-            --spacing-xs: 0.5rem;
-            --spacing-sm: 1rem;
-            --spacing-md: 1.5rem;
-            --spacing-lg: 2rem;
-            --spacing-xl: 3rem;
-            
-            /* Typography */
-            --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            --font-size-xs: 0.75rem;
-            --font-size-sm: 0.875rem;
-            --font-size-base: 1rem;
-            --font-size-lg: 1.125rem;
-            --font-size-xl: 1.25rem;
-            --font-size-2xl: 1.5rem;
-            --font-size-3xl: 2rem;
-            
-            /* Shadows */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            
-            /* Border radius */
-            --radius-sm: 0.375rem;
-            --radius-md: 0.5rem;
-            --radius-lg: 0.75rem;
-            --radius-xl: 1rem;
-            
-            /* Transitions */
-            --transition-fast: 150ms ease;
-            --transition-base: 250ms ease;
-            --transition-slow: 350ms ease;
-            
-            /* Bottom nav height */
-            --bottom-nav-height: 70px;
-        }
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: var(--font-family);
-            background-color: var(--color-bg);
-            color: var(--color-text-primary);
-            line-height: 1.6;
-            overflow-x: hidden;
-            padding-bottom: var(--bottom-nav-height);
-        }
-        
-        /* ==================== HEADER SECTION ==================== */
-        .dashboard-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: var(--spacing-lg) var(--spacing-md) var(--spacing-md);
-            position: relative;
-        }
-        
-        .stats-corner {
-            position: absolute;
-            top: var(--spacing-md);
-            right: var(--spacing-md);
-            display: flex;
-            gap: var(--spacing-sm);
-            z-index: 10;
-        }
-        
-        .stat-badge {
-            background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px);
-            padding: var(--spacing-xs) var(--spacing-sm);
-            border-radius: var(--radius-lg);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 60px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .stat-value {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            line-height: 1;
-        }
-        
-        .stat-label {
-            font-size: var(--font-size-xs);
-            opacity: 0.9;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
-        }
-        
-        .greeting {
-            font-size: var(--font-size-2xl);
-            font-weight: 700;
-            margin-bottom: var(--spacing-xs);
-            padding-right: 140px; /* Space for stats */
-        }
-        
-        .date-time {
-            font-size: var(--font-size-sm);
-            opacity: 0.9;
-        }
-        
-        /* ==================== TODAY'S TASKS SECTION ==================== */
-        .section {
-            padding: var(--spacing-md);
-        }
-        
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .section-title {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            color: var(--color-text-primary);
-        }
-        
-        .view-all-link {
-            color: var(--color-study);
-            text-decoration: none;
-            font-size: var(--font-size-sm);
-            font-weight: 600;
-            transition: opacity var(--transition-fast);
-        }
-        
-        .view-all-link:hover {
-            opacity: 0.7;
-        }
-        
-        .today-tasks-grid {
-            display: grid;
-            gap: var(--spacing-sm);
-        }
-        
-        .task-card-compact {
-            background: var(--color-surface);
-            border-radius: var(--radius-lg);
-            padding: var(--spacing-md);
-            box-shadow: var(--shadow-sm);
-            border-left: 4px solid;
-            transition: all var(--transition-base);
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .task-card-compact:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
-        }
-        
-        .task-card-compact.study { border-left-color: var(--color-study); }
-        .task-card-compact.meals { border-left-color: var(--color-meals); }
-        .task-card-compact.cleaning { border-left-color: var(--color-cleaning); }
-        .task-card-compact.budget { border-left-color: var(--color-budget); }
-        
-        .task-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-            margin-bottom: var(--spacing-xs);
-        }
-        
-        .task-category-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 8px;
-            border-radius: var(--radius-sm);
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .task-category-badge.study { background: rgba(59, 130, 246, 0.1); color: var(--color-study); }
-        .task-category-badge.meals { background: rgba(249, 115, 22, 0.1); color: var(--color-meals); }
-        .task-category-badge.cleaning { background: rgba(16, 185, 129, 0.1); color: var(--color-cleaning); }
-        .task-category-badge.budget { background: rgba(139, 92, 246, 0.1); color: var(--color-budget); }
-        
-        .task-time {
-            font-size: var(--font-size-xs);
-            color: var(--color-text-secondary);
-        }
-        
-        .task-title {
-            font-size: var(--font-size-base);
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: var(--color-text-primary);
-        }
-        
-        .task-description {
-            font-size: var(--font-size-sm);
-            color: var(--color-text-secondary);
-            line-height: 1.4;
-        }
-        
-        /* Premium suggestion banner */
-        .premium-suggestion {
-            background: var(--color-premium);
-            color: white;
-            padding: var(--spacing-md);
-            border-radius: var(--radius-lg);
-            margin-top: var(--spacing-sm);
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-sm);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .premium-icon {
-            font-size: var(--font-size-2xl);
-        }
-        
-        .premium-text {
-            flex: 1;
-        }
-        
-        .premium-title {
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .premium-description {
-            font-size: var(--font-size-sm);
-            opacity: 0.9;
-        }
-        
-        .premium-button {
-            background: white;
-            color: #8B5CF6;
-            border: none;
-            padding: var(--spacing-xs) var(--spacing-md);
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: var(--font-size-sm);
-            cursor: pointer;
-            transition: transform var(--transition-fast);
-        }
-        
-        .premium-button:hover {
-            transform: scale(1.05);
-        }
-        
-        /* ==================== CATEGORY CAROUSEL ==================== */
-        .carousel-section {
-            padding: var(--spacing-lg) 0;
-            background: var(--color-surface);
-            position: relative;
-        }
-        
-        .carousel-nav-button {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid var(--color-border);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all var(--transition-base);
-            box-shadow: var(--shadow-lg);
-            opacity: 0;
-            animation: fadeIn 0.5s ease-in-out 1s forwards;
-        }
-        
-        @keyframes fadeIn {
-            to {
-                opacity: 0.7;
-            }
-        }
-        
-        .carousel-nav-button:hover {
-            opacity: 1 !important;
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .carousel-nav-button.prev {
-            left: var(--spacing-md);
-        }
-        
-        .carousel-nav-button.next {
-            right: var(--spacing-md);
-        }
-        
-        .carousel-nav-button svg {
-            width: 24px;
-            height: 24px;
-            stroke: var(--color-text-primary);
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-        
-        /* Hide arrows on touch devices */
-        @media (hover: none) and (pointer: coarse) {
-            .carousel-nav-button {
-                display: none;
-            }
-        }
-        
-        /* Show arrows only on larger screens */
-        @media (max-width: 768px) {
-            .carousel-nav-button {
-                display: none;
-            }
-        }
-        
-        .carousel-header {
-            padding: 0 var(--spacing-md);
-            margin-bottom: var(--spacing-md);
-        }
-        
-        .carousel-title {
-            font-size: var(--font-size-xl);
-            font-weight: 700;
-            color: var(--color-text-primary);
-        }
-        
-        .carousel-container {
-            overflow-x: auto;
-            overflow-y: hidden;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            padding: var(--spacing-sm) var(--spacing-md);
-            margin: 0 calc(-1 * var(--spacing-md));
-        }
-        
-        /* Hide scrollbar but keep functionality */
-        .carousel-container::-webkit-scrollbar {
-            display: none;
-        }
-        
-        .carousel-container {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-        
-        .carousel-track {
-            display: flex;
-            gap: var(--spacing-md);
-            padding-bottom: var(--spacing-sm);
-        }
-        
-        .category-card {
-            flex: 0 0 280px;
-            height: 160px;
-            border-radius: var(--radius-xl);
-            padding: var(--spacing-md);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            scroll-snap-align: start;
-            transition: all var(--transition-base);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .category-card:hover {
-            transform: translateY(-8px) scale(1.02) rotateY(360deg);
-            box-shadow: var(--shadow-xl);
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .category-card {
-            transform-style: preserve-3d;
-        }
-        
-        .category-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 100%);
-            z-index: 1;
-        }
-        
-        .category-card > * {
-            position: relative;
-            z-index: 2;
-        }
-        
-        /* Category-specific backgrounds */
-        .category-card.study { background: linear-gradient(135deg, var(--color-study) 0%, #2563EB 100%); }
-        .category-card.meals { background: linear-gradient(135deg, var(--color-meals) 0%, #EA580C 100%); }
-        .category-card.cleaning { background: linear-gradient(135deg, var(--color-cleaning) 0%, #059669 100%); }
-        .category-card.budget { background: linear-gradient(135deg, var(--color-budget) 0%, #7C3AED 100%); }
-        .category-card.diy { background: linear-gradient(135deg, var(--color-diy) 0%, #D97706 100%); }
-        .category-card.support { background: linear-gradient(135deg, var(--color-support) 0%, #0D9488 100%); }
-        .category-card.legal { background: linear-gradient(135deg, var(--color-legal) 0%, #1E3A8A 100%); }
-        .category-card.uni { background: linear-gradient(135deg, var(--color-uni) 0%, #DB2777 100%); }
-        
-        .category-icon {
-            font-size: 3rem;
-            line-height: 1;
-            color: white;
-        }
-        
-        .category-info {
-            color: white;
-        }
-        
-        .category-name {
-            font-size: var(--font-size-lg);
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-        
-        .category-count {
-            font-size: var(--font-size-sm);
-            opacity: 0.9;
-        }
-        
-        /* ==================== BOTTOM NAVIGATION ==================== */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: var(--bottom-nav-height);
-            background: var(--color-surface);
-            border-top: 1px solid var(--color-border);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: var(--spacing-xs) 0;
-            z-index: 100;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            flex: 1;
-            text-decoration: none;
-            color: var(--color-text-secondary);
-            transition: all var(--transition-fast);
-            padding: var(--spacing-xs);
-            cursor: pointer;
-            position: relative;
-        }
-        
-        .nav-item.active {
-            color: var(--color-study);
-        }
-        
-        .nav-item:hover {
-            color: var(--color-study);
-        }
-        
-        .nav-icon {
-            font-size: 1.5rem;
-            line-height: 1;
-        }
-        
-        .nav-label {
-            font-size: var(--font-size-xs);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .nav-badge {
-            position: absolute;
-            top: 0;
-            right: 25%;
-            background: #EF4444;
-            color: white;
-            font-size: 0.625rem;
-            font-weight: 700;
-            padding: 2px 5px;
-            border-radius: 10px;
-            min-width: 18px;
-            text-align: center;
-        }
-        
-        /* ==================== RESPONSIVE ==================== */
-        @media (min-width: 768px) {
-            .dashboard-header {
-                padding: var(--spacing-xl) var(--spacing-lg) var(--spacing-lg);
-            }
-            
-            .section {
-                padding: var(--spacing-lg);
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-            
-            .carousel-section {
-                padding: var(--spacing-xl) 0;
-            }
-            
-            .today-tasks-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-            
-            .category-card {
-                flex: 0 0 320px;
-                height: 180px;
-            }
-            
-            .stats-corner {
-                gap: var(--spacing-md);
-            }
-            
-            .stat-badge {
-                min-width: 70px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .carousel-container {
-                padding: var(--spacing-md) var(--spacing-lg);
-            }
-            
-            .category-card {
-                flex: 0 0 360px;
-                height: 200px;
-            }
-        }
-        
-        /* ==================== ACCESSIBILITY ==================== */
-        @media (prefers-reduced-motion: reduce) {
-            * {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-                scroll-behavior: auto !important;
-            }
-        }
-        
-        /* Focus visible styles for keyboard navigation */
-        *:focus-visible {
-            outline: 3px solid var(--color-study);
-            outline-offset: 2px;
-        }
-        
-        /* Screen reader only content */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border-width: 0;
-        }
-    </style>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/gamification.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/navigation.css">
+    <link rel="stylesheet" href="../css/components/modals.css">
+    <link rel="stylesheet" href="../css/sections/dashboard.css">
 </head>
 <body>
-    <!-- Header with stats -->
-    <header class="dashboard-header" role="banner">
-        <div class="stats-corner" aria-label="User statistics">
-            <div class="stat-badge" role="status" aria-label="Level 12">
-                <div class="stat-value">12</div>
-                <div class="stat-label">Level</div>
-            </div>
-            <div class="stat-badge" role="status" aria-label="7 day streak">
-                <div class="stat-value">7</div>
-                <div class="stat-label">Streak</div>
-            </div>
-            <div class="stat-badge" role="status" aria-label="3,450 points">
-                <div class="stat-value">3.4k</div>
-                <div class="stat-label">Points</div>
-            </div>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
+    <!-- Header Navigation -->
+    <header class="site-header" role="banner">
+        <div class="container">
+            <nav aria-label="Main navigation">
+                <a href="../index.html" class="logo">
+                    <span class="logo-icon" aria-hidden="true">🏠</span>
+                    <span class="logo-text">Student Life Hub</span>
+                </a>
+                
+                <button class="mobile-menu-toggle" 
+                        aria-expanded="false" 
+                        aria-controls="main-nav"
+                        aria-label="Toggle navigation menu">
+                    <span class="hamburger" aria-hidden="true"></span>
+                </button>
+
+                <ul class="main-nav" id="main-nav">
+                    <li><a href="dashboard.html" class="active" aria-current="page">Dashboard</a></li>
+                    <li><a href="meals.html">Meals</a></li>
+                    <li><a href="planner.html">Planner</a></li>
+                    <li><a href="cleaning.html">Cleaning</a></li>
+                    <li><a href="budget.html">Budget</a></li>
+                    <li><a href="support.html">Support</a></li>
+                </ul>
+
+                <div class="header-actions">
+                    <button class="btn-icon" aria-label="Notifications">
+                        <span aria-hidden="true">🔔</span>
+                    </button>
+                    <button class="btn-icon" id="user-menu-btn" aria-label="User menu">
+                        <span aria-hidden="true">👤</span>
+                    </button>
+                </div>
+            </nav>
         </div>
-        
-        <h1 class="greeting">Good morning, Graeme! 👋</h1>
-        <div class="date-time" id="dateTime" role="status" aria-live="polite">Thursday, November 21, 2024 • 9:30 AM</div>
     </header>
 
-    <!-- Today's Tasks Section -->
-    <section class="section" aria-labelledby="today-tasks-title">
-        <div class="section-header">
-            <h2 class="section-title" id="today-tasks-title">Today's Tasks</h2>
-            <a href="#" class="view-all-link" aria-label="View all tasks">View All →</a>
-        </div>
-        
-        <div class="today-tasks-grid" role="list">
-            <!-- Study Task -->
-            <article class="task-card-compact study" role="listitem" tabindex="0">
-                <div class="task-card-header">
-                    <span class="task-category-badge study">📚 Study</span>
-                    <span class="task-time">10:00 AM</span>
-                </div>
-                <h3 class="task-title">Pomodoro Session: Physics</h3>
-                <p class="task-description">25-minute focused study session on quantum mechanics</p>
-            </article>
+    <!-- Main Content -->
+    <main id="main-content" class="dashboard-main">
+        <div class="container">
             
-            <!-- Meals Task -->
-            <article class="task-card-compact meals" role="listitem" tabindex="0">
-                <div class="task-card-header">
-                    <span class="task-category-badge meals">🍳 Meals</span>
-                    <span class="task-time">1:00 PM</span>
+            <!-- Welcome Section -->
+            <section class="welcome-section" aria-labelledby="welcome-heading">
+                <div class="welcome-content">
+                    <h1 id="welcome-heading" class="welcome-title">
+                        Welcome back, <span id="user-name">Student</span>! 👋
+                    </h1>
+                    <p class="welcome-date" id="current-date">Loading date...</p>
                 </div>
-                <h3 class="task-title">Quick Pasta Carbonara</h3>
-                <p class="task-description">15-minute meal prep • Budget-friendly</p>
-            </article>
-            
-            <!-- Cleaning Task -->
-            <article class="task-card-compact cleaning" role="listitem" tabindex="0">
-                <div class="task-card-header">
-                    <span class="task-category-badge cleaning">🧹 Cleaning</span>
-                    <span class="task-time">6:00 PM</span>
+                <div class="welcome-streak">
+                    <span class="streak-icon" aria-hidden="true">🔥</span>
+                    <span class="streak-count" id="streak-days">0</span>
+                    <span class="streak-label">day streak</span>
                 </div>
-                <h3 class="task-title">Quick Kitchen Tidy</h3>
-                <p class="task-description">10-minute routine • Wipe surfaces & wash dishes</p>
-            </article>
+            </section>
+
+            <!-- Quick Stats -->
+            <section class="stats-section" aria-labelledby="stats-heading">
+                <h2 id="stats-heading" class="visually-hidden">Your statistics</h2>
+                <div class="stats-grid">
+                    
+                    <article class="stat-card stat-points">
+                        <div class="stat-icon" aria-hidden="true">⭐</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="total-points">0</div>
+                            <div class="stat-label">Total Points</div>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-level">
+                        <div class="stat-icon" aria-hidden="true">🏆</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="user-level">1</div>
+                            <div class="stat-label">Level</div>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-xp">
+                        <div class="stat-icon" aria-hidden="true">✨</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="xp-today">0</div>
+                            <div class="stat-label">XP Today</div>
+                        </div>
+                    </article>
+
+                    <article class="stat-card stat-tasks">
+                        <div class="stat-icon" aria-hidden="true">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="tasks-completed">0</div>
+                            <div class="stat-label">Tasks Done</div>
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- Today's Tasks -->
+            <section class="tasks-section" aria-labelledby="tasks-heading">
+                <div class="section-header">
+                    <h2 id="tasks-heading" class="section-title">Today's Tasks</h2>
+                    <button class="btn-secondary btn-small" id="add-task-btn">
+                        <span aria-hidden="true">➕</span> Add Task
+                    </button>
+                </div>
+                
+                <div id="tasks-container" class="tasks-grid">
+                    <!-- Tasks will be dynamically inserted here -->
+                </div>
+
+                <div id="no-tasks-message" class="empty-state" hidden>
+                    <span class="empty-icon" aria-hidden="true">📋</span>
+                    <p class="empty-title">No tasks for today</p>
+                    <p class="empty-description">Add a task to get started!</p>
+                </div>
+            </section>
+
+            <!-- AI Suggestions Section -->
+            <section class="suggestions-section" aria-labelledby="suggestions-heading">
+                <div class="section-header">
+                    <h2 id="suggestions-heading" class="section-title">
+                        <span aria-hidden="true">🤖</span> Smart Suggestions
+                    </h2>
+                </div>
+
+                <!-- Premium Upsell (shown for free users) -->
+                <div id="premium-upsell" class="premium-card" hidden>
+                    <div class="premium-content">
+                        <div class="premium-icon" aria-hidden="true">✨</div>
+                        <h3 class="premium-title">Get Smart Suggestions</h3>
+                        <p class="premium-description">
+                            Upgrade to Premium and get AI-powered task suggestions based on your patterns and habits. 
+                            Never miss important tasks again!
+                        </p>
+                        <ul class="premium-features">
+                            <li>
+                                <span aria-hidden="true">✓</span> 
+                                Personalized task recommendations
+                            </li>
+                            <li>
+                                <span aria-hidden="true">✓</span> 
+                                Pattern-based insights
+                            </li>
+                            <li>
+                                <span aria-hidden="true">✓</span> 
+                                Quick-add suggested tasks
+                            </li>
+                            <li>
+                                <span aria-hidden="true">✓</span> 
+                                Priority scheduling
+                            </li>
+                        </ul>
+                        <button class="btn-premium" id="upgrade-btn">
+                            Upgrade to Premium - £2.99/month
+                        </button>
+                        <p class="premium-note">Cancel anytime • 14-day free trial</p>
+                    </div>
+                </div>
+
+                <!-- Suggestions Container (shown for premium users) -->
+                <div id="suggestions-container" class="suggestions-grid" hidden>
+                    <!-- AI suggestions will be dynamically inserted here -->
+                </div>
+            </section>
+
         </div>
-        
-        <!-- Premium Suggestion (Free tier) -->
-        <div class="premium-suggestion" role="complementary" aria-label="Premium feature promotion">
-            <span class="premium-icon" aria-hidden="true">✨</span>
-            <div class="premium-text">
-                <div class="premium-title">Get Smart Suggestions</div>
-                <div class="premium-description">Let us suggest tasks based on your patterns and habits</div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer" role="contentinfo">
+        <div class="container">
+            <p class="footer-text">&copy; 2025 Student Life Hub. All rights reserved.</p>
+            <nav aria-label="Footer navigation">
+                <ul class="footer-nav">
+                    <li><a href="support.html">Support</a></li>
+                    <li><a href="legal.html">Privacy</a></li>
+                    <li><a href="legal.html">Terms</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- Add Task Modal -->
+    <div id="add-task-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" hidden>
+        <div class="modal-overlay" data-close-modal></div>
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modal-title" class="modal-title">Add New Task</h3>
+                <button class="modal-close" data-close-modal aria-label="Close modal">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
-            <button class="premium-button" aria-label="Upgrade to premium">Upgrade</button>
-        </div>
-    </section>
+            
+            <form id="add-task-form" class="modal-body">
+                <div class="form-group">
+                    <label for="task-title" class="form-label">Task Title *</label>
+                    <input 
+                        type="text" 
+                        id="task-title" 
+                        name="title" 
+                        class="form-input" 
+                        required 
+                        placeholder="e.g., Complete assignment"
+                        aria-required="true">
+                </div>
 
-    <!-- Category Carousel -->
-    <section class="carousel-section" aria-labelledby="explore-title">
-        <div class="carousel-header">
-            <h2 class="carousel-title" id="explore-title">Explore Categories</h2>
-        </div>
-        
-        <!-- Navigation Arrows -->
-        <button class="carousel-nav-button prev" aria-label="Scroll carousel left" id="carouselPrev">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M15 18l-6-6 6-6"/>
-            </svg>
-        </button>
-        
-        <button class="carousel-nav-button next" aria-label="Scroll carousel right" id="carouselNext">
-            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M9 18l6-6-6-6"/>
-            </svg>
-        </button>
-        
-        <div class="carousel-container" role="region" aria-label="Category carousel" tabindex="0" id="categoryCarousel">
-            <div class="carousel-track" role="list">
-                <article class="category-card study" role="listitem" tabindex="0" aria-label="Study category, 24 items available">
-                    <div class="category-icon" aria-hidden="true">📚</div>
-                    <div class="category-info">
-                        <div class="category-name">Study</div>
-                        <div class="category-count">24 techniques available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card meals" role="listitem" tabindex="0" aria-label="Meals category, 48 items available">
-                    <div class="category-icon" aria-hidden="true">🍳</div>
-                    <div class="category-info">
-                        <div class="category-name">Meals</div>
-                        <div class="category-count">48 recipes available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card cleaning" role="listitem" tabindex="0" aria-label="Cleaning category, 15 items available">
-                    <div class="category-icon" aria-hidden="true">🧹</div>
-                    <div class="category-info">
-                        <div class="category-name">Cleaning</div>
-                        <div class="category-count">15 routines available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card budget" role="listitem" tabindex="0" aria-label="Budget category, 12 items available">
-                    <div class="category-icon" aria-hidden="true">💰</div>
-                    <div class="category-info">
-                        <div class="category-name">Budget</div>
-                        <div class="category-count">12 tools available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card diy" role="listitem" tabindex="0" aria-label="DIY category, 18 items available">
-                    <div class="category-icon" aria-hidden="true">🔧</div>
-                    <div class="category-info">
-                        <div class="category-name">DIY & Repairs</div>
-                        <div class="category-count">18 guides available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card support" role="listitem" tabindex="0" aria-label="Support category, 32 items available">
-                    <div class="category-icon" aria-hidden="true">💚</div>
-                    <div class="category-info">
-                        <div class="category-name">Support</div>
-                        <div class="category-count">32 resources available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card legal" role="listitem" tabindex="0" aria-label="Legal category, 8 items available">
-                    <div class="category-icon" aria-hidden="true">⚖️</div>
-                    <div class="category-info">
-                        <div class="category-name">Legal</div>
-                        <div class="category-count">8 guides available</div>
-                    </div>
-                </article>
-                
-                <article class="category-card uni" role="listitem" tabindex="0" aria-label="Uni Life category, 28 items available">
-                    <div class="category-icon" aria-hidden="true">🎓</div>
-                    <div class="category-info">
-                        <div class="category-name">Uni Life</div>
-                        <div class="category-count">28 tips available</div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
+                <div class="form-group">
+                    <label for="task-category" class="form-label">Category *</label>
+                    <select id="task-category" name="category" class="form-select" required aria-required="true">
+                        <option value="">Select category...</option>
+                        <option value="study">📚 Study</option>
+                        <option value="meals">🍳 Meals</option>
+                        <option value="cleaning">🧹 Cleaning</option>
+                        <option value="budget">💰 Budget</option>
+                        <option value="diy">🔧 DIY</option>
+                        <option value="other">📋 Other</option>
+                    </select>
+                </div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
-        <a href="#" class="nav-item active" aria-current="page" aria-label="Today dashboard">
-            <span class="nav-icon" aria-hidden="true">🏠</span>
-            <span class="nav-label">Today</span>
-        </a>
-        
-        <a href="#" class="nav-item" aria-label="Browse all categories">
-            <span class="nav-icon" aria-hidden="true">📋</span>
-            <span class="nav-label">Browse</span>
-            <span class="nav-badge" aria-label="3 new items">3</span>
-        </a>
-        
-        <a href="#" class="nav-item" aria-label="View progress and statistics">
-            <span class="nav-icon" aria-hidden="true">📊</span>
-            <span class="nav-label">Progress</span>
-        </a>
-        
-        <a href="#" class="nav-item" aria-label="Settings">
-            <span class="nav-icon" aria-hidden="true">⚙️</span>
-            <span class="nav-label">Settings</span>
-        </a>
-    </nav>
+                <div class="form-group">
+                    <label for="task-time" class="form-label">Estimated Time (minutes)</label>
+                    <input 
+                        type="number" 
+                        id="task-time" 
+                        name="time" 
+                        class="form-input" 
+                        min="5" 
+                        max="480" 
+                        step="5"
+                        placeholder="30">
+                </div>
 
-    <script>
-        // Update date/time
-        function updateDateTime() {
-            const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            };
-            const timeOptions = {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true
-            };
-            
-            const dateStr = now.toLocaleDateString('en-GB', options);
-            const timeStr = now.toLocaleTimeString('en-GB', timeOptions);
-            
-            document.getElementById('dateTime').textContent = `${dateStr} • ${timeStr}`;
-        }
-        
-        updateDateTime();
-        setInterval(updateDateTime, 60000); // Update every minute
-        
-        // Smooth scroll for carousel
-        const carousel = document.querySelector('.carousel-container');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-        
-        carousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            carousel.style.cursor = 'grabbing';
-            startX = e.pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
-        });
-        
-        carousel.addEventListener('mouseleave', () => {
-            isDown = false;
-            carousel.style.cursor = 'grab';
-        });
-        
-        carousel.addEventListener('mouseup', () => {
-            isDown = false;
-            carousel.style.cursor = 'grab';
-        });
-        
-        carousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2;
-            carousel.scrollLeft = scrollLeft - walk;
-        });
-        
-        // Add click handlers for task cards
-        document.querySelectorAll('.task-card-compact').forEach(card => {
-            card.addEventListener('click', function() {
-                console.log('Task clicked:', this.querySelector('.task-title').textContent);
-                // Will link to full task view
-            });
-            
-            // Keyboard accessibility
-            card.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-        });
-        
-        // Add click handlers for category cards
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const category = this.querySelector('.category-name').textContent;
-                console.log('Category clicked:', category);
-                // Will link to category page
-            });
-            
-            // Keyboard accessibility
-            card.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    this.click();
-                }
-            });
-        });
-        
-        // Update greeting based on time of day
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            const greeting = document.querySelector('.greeting');
-            let greetingText = 'Good morning';
-            
-            if (hour >= 12 && hour < 17) {
-                greetingText = 'Good afternoon';
-            } else if (hour >= 17) {
-                greetingText = 'Good evening';
-            }
-            
-            greeting.textContent = `${greetingText}, Graeme! 👋`;
-        }
-        
-        updateGreeting();
-        
-        // Carousel navigation arrows
-        const carouselContainer = document.getElementById('categoryCarousel');
-        const prevButton = document.getElementById('carouselPrev');
-        const nextButton = document.getElementById('carouselNext');
-        
-        if (prevButton && nextButton && carouselContainer) {
-            prevButton.addEventListener('click', () => {
-                carouselContainer.scrollBy({
-                    left: -340,
-                    behavior: 'smooth'
-                });
-            });
-            
-            nextButton.addEventListener('click', () => {
-                carouselContainer.scrollBy({
-                    left: 340,
-                    behavior: 'smooth'
-                });
-            });
-            
-            // Hide/show arrows based on scroll position
-            function updateArrows() {
-                const { scrollLeft, scrollWidth, clientWidth } = carouselContainer;
-                
-                // Hide left arrow if at start
-                if (scrollLeft <= 10) {
-                    prevButton.style.opacity = '0';
-                    prevButton.style.pointerEvents = 'none';
-                } else {
-                    prevButton.style.opacity = '0.7';
-                    prevButton.style.pointerEvents = 'auto';
-                }
-                
-                // Hide right arrow if at end
-                if (scrollLeft + clientWidth >= scrollWidth - 10) {
-                    nextButton.style.opacity = '0';
-                    nextButton.style.pointerEvents = 'none';
-                } else {
-                    nextButton.style.opacity = '0.7';
-                    nextButton.style.pointerEvents = 'auto';
-                }
-            }
-            
-            carouselContainer.addEventListener('scroll', updateArrows);
-            window.addEventListener('resize', updateArrows);
-            
-            // Initial check
-            setTimeout(updateArrows, 100);
-        }
-    </script>
+                <div class="form-group">
+                    <label for="task-priority" class="form-label">Priority</label>
+                    <select id="task-priority" name="priority" class="form-select">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
+                    <button type="submit" class="btn-primary">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="../js/storage.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/components/cards.js"></script>
+    <script src="../js/pages/dashboard.js"></script>
 </body>
 </html>
