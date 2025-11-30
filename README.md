@@ -10,7 +10,7 @@ Student Life Hub is a comprehensive web application designed to support 18-25 ye
 
 **Target Users:** HE and University Students  
 **Business Model:** Freemium (Free tier + Premium subscription)  
-**Launch Target:** February 2025
+**Launch Target:** February 2026
 
 ---
 
