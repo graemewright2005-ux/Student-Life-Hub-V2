@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Your personal student dashboard - track progress, view tasks, and get smart suggestions">
-    <title>Dashboard | Student Life Hub</title>
+    <title>Dashboard - Student Life Hub</title>
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="../css/reset.css">
@@ -17,265 +16,181 @@
     <link rel="stylesheet" href="../css/components/buttons.css">
     <link rel="stylesheet" href="../css/components/cards.css">
     <link rel="stylesheet" href="../css/components/navigation.css">
-    <link rel="stylesheet" href="../css/components/modals.css">
     <link rel="stylesheet" href="../css/sections/dashboard.css">
 </head>
 <body>
-    <!-- Skip Link for Accessibility -->
+    <!-- Skip Link -->
     <a href="#main-content" class="skip-link">Skip to main content</a>
-
-    <!-- Header Navigation -->
-    <header class="site-header" role="banner">
+    
+    <!-- Main Navigation -->
+    <header class="main-header">
         <div class="container">
-            <nav aria-label="Main navigation">
-                <a href="../index.html" class="logo">
-                    <span class="logo-icon" aria-hidden="true">🏠</span>
-                    <span class="logo-text">Student Life Hub</span>
-                </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <div class="nav-brand">
+                    <h1 class="logo">Student Life Hub</h1>
+                </div>
                 
-                <button class="mobile-menu-toggle" 
-                        aria-expanded="false" 
-                        aria-controls="main-nav"
-                        aria-label="Toggle navigation menu">
-                    <span class="hamburger" aria-hidden="true"></span>
+                <button class="nav-toggle" 
+                        aria-label="Toggle navigation menu" 
+                        aria-expanded="false">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </button>
-
-                <ul class="main-nav" id="main-nav">
+                
+                <ul class="nav-menu" id="main-menu">
                     <li><a href="dashboard.html" class="active" aria-current="page">Dashboard</a></li>
                     <li><a href="meals.html">Meals</a></li>
-                    <li><a href="planner.html">Planner</a></li>
+                    <li><a href="study.html">Study</a></li>
                     <li><a href="cleaning.html">Cleaning</a></li>
                     <li><a href="budget.html">Budget</a></li>
+                    <li><a href="diy.html">DIY</a></li>
                     <li><a href="support.html">Support</a></li>
+                    <li><a href="legal.html">Legal</a></li>
+                    <li><a href="uni-essentials.html">Uni Essentials</a></li>
                 </ul>
-
-                <div class="header-actions">
-                    <button class="btn-icon" aria-label="Notifications">
-                        <span aria-hidden="true">🔔</span>
-                    </button>
-                    <button class="btn-icon" id="user-menu-btn" aria-label="User menu">
-                        <span aria-hidden="true">👤</span>
-                    </button>
-                </div>
             </nav>
         </div>
     </header>
-
+    
     <!-- Main Content -->
     <main id="main-content" class="dashboard-main">
         <div class="container">
             
             <!-- Welcome Section -->
-            <section class="welcome-section" aria-labelledby="welcome-heading">
+            <section class="dashboard-welcome">
                 <div class="welcome-content">
-                    <h1 id="welcome-heading" class="welcome-title">
+                    <h2 class="welcome-title">
                         Welcome back, <span id="user-name">Student</span>! 👋
-                    </h1>
-                    <p class="welcome-date" id="current-date">Loading date...</p>
-                </div>
-                <div class="welcome-streak">
-                    <span class="streak-icon" aria-hidden="true">🔥</span>
-                    <span class="streak-count" id="streak-days">0</span>
-                    <span class="streak-label">day streak</span>
+                    </h2>
+                    <p class="welcome-date" id="current-date">
+                        <!-- Date will be inserted by JavaScript -->
+                    </p>
+                    <p class="welcome-quote" id="motivational-quote">
+                        <!-- Quote will be inserted by JavaScript -->
+                    </p>
                 </div>
             </section>
-
+            
             <!-- Quick Stats -->
-            <section class="stats-section" aria-labelledby="stats-heading">
-                <h2 id="stats-heading" class="visually-hidden">Your statistics</h2>
+            <section class="dashboard-stats" aria-label="Your statistics">
                 <div class="stats-grid">
-                    
-                    <article class="stat-card stat-points">
-                        <div class="stat-icon" aria-hidden="true">⭐</div>
+                    <!-- Points Card -->
+                    <div class="stat-card stat-points">
+                        <div class="stat-icon">⭐</div>
                         <div class="stat-content">
-                            <div class="stat-value" id="total-points">0</div>
-                            <div class="stat-label">Total Points</div>
+                            <div class="stat-value" id="user-points">0</div>
+                            <div class="stat-label">Points</div>
                         </div>
-                    </article>
-
-                    <article class="stat-card stat-level">
-                        <div class="stat-icon" aria-hidden="true">🏆</div>
+                    </div>
+                    
+                    <!-- Level Card -->
+                    <div class="stat-card stat-level">
+                        <div class="stat-icon">🎯</div>
                         <div class="stat-content">
                             <div class="stat-value" id="user-level">1</div>
                             <div class="stat-label">Level</div>
                         </div>
-                    </article>
-
-                    <article class="stat-card stat-xp">
-                        <div class="stat-icon" aria-hidden="true">✨</div>
+                    </div>
+                    
+                    <!-- Streak Card -->
+                    <div class="stat-card stat-streak">
+                        <div class="stat-icon">🔥</div>
                         <div class="stat-content">
-                            <div class="stat-value" id="xp-today">0</div>
-                            <div class="stat-label">XP Today</div>
+                            <div class="stat-value" id="user-streak">0</div>
+                            <div class="stat-label">Day Streak</div>
                         </div>
-                    </article>
-
-                    <article class="stat-card stat-tasks">
-                        <div class="stat-icon" aria-hidden="true">✅</div>
+                    </div>
+                    
+                    <!-- Tasks Card -->
+                    <div class="stat-card stat-tasks">
+                        <div class="stat-icon">✅</div>
                         <div class="stat-content">
-                            <div class="stat-value" id="tasks-completed">0</div>
-                            <div class="stat-label">Tasks Done</div>
+                            <div class="stat-value">
+                                <span id="completed-tasks">0</span>/<span id="total-tasks">0</span>
+                            </div>
+                            <div class="stat-label">Tasks Today</div>
                         </div>
-                    </article>
-
-                </div>
-            </section>
-
-            <!-- Today's Tasks -->
-            <section class="tasks-section" aria-labelledby="tasks-heading">
-                <div class="section-header">
-                    <h2 id="tasks-heading" class="section-title">Today's Tasks</h2>
-                    <button class="btn-secondary btn-small" id="add-task-btn">
-                        <span aria-hidden="true">➕</span> Add Task
-                    </button>
-                </div>
-                
-                <div id="tasks-container" class="tasks-grid">
-                    <!-- Tasks will be dynamically inserted here -->
-                </div>
-
-                <div id="no-tasks-message" class="empty-state" hidden>
-                    <span class="empty-icon" aria-hidden="true">📋</span>
-                    <p class="empty-title">No tasks for today</p>
-                    <p class="empty-description">Add a task to get started!</p>
-                </div>
-            </section>
-
-            <!-- AI Suggestions Section -->
-            <section class="suggestions-section" aria-labelledby="suggestions-heading">
-                <div class="section-header">
-                    <h2 id="suggestions-heading" class="section-title">
-                        <span aria-hidden="true">🤖</span> Smart Suggestions
-                    </h2>
-                </div>
-
-                <!-- Premium Upsell (shown for free users) -->
-                <div id="premium-upsell" class="premium-card" hidden>
-                    <div class="premium-content">
-                        <div class="premium-icon" aria-hidden="true">✨</div>
-                        <h3 class="premium-title">Get Smart Suggestions</h3>
-                        <p class="premium-description">
-                            Upgrade to Premium and get AI-powered task suggestions based on your patterns and habits. 
-                            Never miss important tasks again!
-                        </p>
-                        <ul class="premium-features">
-                            <li>
-                                <span aria-hidden="true">✓</span> 
-                                Personalized task recommendations
-                            </li>
-                            <li>
-                                <span aria-hidden="true">✓</span> 
-                                Pattern-based insights
-                            </li>
-                            <li>
-                                <span aria-hidden="true">✓</span> 
-                                Quick-add suggested tasks
-                            </li>
-                            <li>
-                                <span aria-hidden="true">✓</span> 
-                                Priority scheduling
-                            </li>
-                        </ul>
-                        <button class="btn-premium" id="upgrade-btn">
-                            Upgrade to Premium - £2.99/month
-                        </button>
-                        <p class="premium-note">Cancel anytime • 14-day free trial</p>
                     </div>
                 </div>
-
-                <!-- Suggestions Container (shown for premium users) -->
-                <div id="suggestions-container" class="suggestions-grid" hidden>
-                    <!-- AI suggestions will be dynamically inserted here -->
+            </section>
+            
+            <!-- Today's Schedule -->
+            <section class="dashboard-today">
+                <h2 class="section-title">Today's Schedule</h2>
+                
+                <!-- Meals Today -->
+                <div class="today-section">
+                    <h3 class="today-section-title">
+                        <span class="section-icon" style="background-color: var(--color-meals);">🍳</span>
+                        Meals
+                    </h3>
+                    <div id="today-meals" class="today-items">
+                        <p class="empty-state">No meals planned yet. <a href="meals.html">Browse meals</a></p>
+                    </div>
+                </div>
+                
+                <!-- Study Sessions Today -->
+                <div class="today-section">
+                    <h3 class="today-section-title">
+                        <span class="section-icon" style="background-color: var(--color-study);">📚</span>
+                        Study Sessions
+                    </h3>
+                    <div id="today-study" class="today-items">
+                        <p class="empty-state">No study sessions planned. <a href="study.html">Create schedule</a></p>
+                    </div>
+                </div>
+                
+                <!-- Cleaning Tasks Today -->
+                <div class="today-section">
+                    <h3 class="today-section-title">
+                        <span class="section-icon" style="background-color: var(--color-cleaning);">🧹</span>
+                        Cleaning Tasks
+                    </h3>
+                    <div id="today-cleaning" class="today-items">
+                        <p class="empty-state">No tasks scheduled. <a href="cleaning.html">View tasks</a></p>
+                    </div>
                 </div>
             </section>
-
+            
+            <!-- Quick Actions -->
+            <section class="dashboard-actions">
+                <h2 class="section-title">Quick Actions</h2>
+                <div class="action-buttons">
+                    <a href="meals.html" class="btn btn-primary" style="background-color: var(--color-meals);">
+                        + Add Meal
+                    </a>
+                    <a href="study.html" class="btn btn-primary" style="background-color: var(--color-study);">
+                        + Study Block
+                    </a>
+                    <a href="cleaning.html" class="btn btn-primary" style="background-color: var(--color-cleaning);">
+                        + Cleaning Task
+                    </a>
+                    <a href="budget.html" class="btn btn-primary" style="background-color: var(--color-budget);">
+                        + Log Expense
+                    </a>
+                </div>
+            </section>
+            
         </div>
     </main>
-
+    
     <!-- Footer -->
-    <footer class="site-footer" role="contentinfo">
+    <footer class="main-footer">
         <div class="container">
-            <p class="footer-text">&copy; 2025 Student Life Hub. All rights reserved.</p>
-            <nav aria-label="Footer navigation">
-                <ul class="footer-nav">
-                    <li><a href="support.html">Support</a></li>
-                    <li><a href="legal.html">Privacy</a></li>
-                    <li><a href="legal.html">Terms</a></li>
-                </ul>
-            </nav>
+            <p>&copy; 2025 Build New Habits. All rights reserved.</p>
+            <p class="footer-links">
+                <a href="support.html">Support</a> | 
+                <a href="legal.html">Legal</a> | 
+                <a href="../index.html">Home</a>
+            </p>
         </div>
     </footer>
-
-    <!-- Add Task Modal -->
-    <div id="add-task-modal" class="modal" role="dialog" aria-labelledby="modal-title" aria-modal="true" hidden>
-        <div class="modal-overlay" data-close-modal></div>
-        <div class="modal-container">
-            <div class="modal-header">
-                <h3 id="modal-title" class="modal-title">Add New Task</h3>
-                <button class="modal-close" data-close-modal aria-label="Close modal">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            
-            <form id="add-task-form" class="modal-body">
-                <div class="form-group">
-                    <label for="task-title" class="form-label">Task Title *</label>
-                    <input 
-                        type="text" 
-                        id="task-title" 
-                        name="title" 
-                        class="form-input" 
-                        required 
-                        placeholder="e.g., Complete assignment"
-                        aria-required="true">
-                </div>
-
-                <div class="form-group">
-                    <label for="task-category" class="form-label">Category *</label>
-                    <select id="task-category" name="category" class="form-select" required aria-required="true">
-                        <option value="">Select category...</option>
-                        <option value="study">📚 Study</option>
-                        <option value="meals">🍳 Meals</option>
-                        <option value="cleaning">🧹 Cleaning</option>
-                        <option value="budget">💰 Budget</option>
-                        <option value="diy">🔧 DIY</option>
-                        <option value="other">📋 Other</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="task-time" class="form-label">Estimated Time (minutes)</label>
-                    <input 
-                        type="number" 
-                        id="task-time" 
-                        name="time" 
-                        class="form-input" 
-                        min="5" 
-                        max="480" 
-                        step="5"
-                        placeholder="30">
-                </div>
-
-                <div class="form-group">
-                    <label for="task-priority" class="form-label">Priority</label>
-                    <select id="task-priority" name="priority" class="form-select">
-                        <option value="low">Low</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="high">High</option>
-                    </select>
-                </div>
-
-                <div class="modal-actions">
-                    <button type="button" class="btn-secondary" data-close-modal>Cancel</button>
-                    <button type="submit" class="btn-primary">Add Task</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
+    
     <!-- JavaScript Files -->
+    <script src="../js/utils.js"></script>
     <script src="../js/storage.js"></script>
     <script src="../js/auth.js"></script>
-    <script src="../js/utils.js"></script>
     <script src="../js/components/cards.js"></script>
     <script src="../js/pages/dashboard.js"></script>
 </body>
