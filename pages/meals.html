@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meals - Student Life Hub</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../css/reset.css">
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/accessibility.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/gamification.css">
+    <link rel="stylesheet" href="../css/components/buttons.css">
+    <link rel="stylesheet" href="../css/components/cards.css">
+    <link rel="stylesheet" href="../css/components/navigation.css">
+    <link rel="stylesheet" href="../css/sections/meals.css">
+</head>
+<body class="dark-theme">
+    <!-- Skip Link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="meals-main">
+        <div class="meals-container">
+            
+            <!-- Page Header -->
+            <header class="page-header">
+                <h1 class="page-title">🍳 Meal Browser</h1>
+                <p class="page-description">Discover delicious student-friendly recipes</p>
+            </header>
+            
+            <!-- Filter Controls -->
+            <section class="filter-section">
+                <h2 class="sr-only">Filter meals</h2>
+                
+                <!-- Meal Type Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Meal Type</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="breakfast">🌅 Breakfast</button>
+                        <button class="filter-btn" data-filter="lunch">☀️ Lunch</button>
+                        <button class="filter-btn" data-filter="dinner">🌙 Dinner</button>
+                        <button class="filter-btn" data-filter="snack">🍪 Snacks</button>
+                    </div>
+                </div>
+                
+                <!-- Dietary Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Dietary</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-dietary="all">All</button>
+                        <button class="filter-btn" data-dietary="vegetarian">🥕 Vegetarian</button>
+                        <button class="filter-btn" data-dietary="vegan">🌱 Vegan</button>
+                        <button class="filter-btn" data-dietary="meat">🍖 Meat</button>
+                    </div>
+                </div>
+                
+                <!-- Difficulty Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Difficulty</label>
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" data-difficulty="all">All</button>
+                        <button class="filter-btn" data-difficulty="easy">⭐ Easy</button>
+                        <button class="filter-btn" data-difficulty="moderate">⭐⭐ Moderate</button>
+                        <button class="filter-btn" data-difficulty="hard">⭐⭐⭐ Hard</button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Results Count -->
+            <div class="results-info">
+                <p class="results-count">
+                    Showing <span id="results-count">0</span> meals
+                    <span class="premium-badge-inline">✨ <span id="premium-count">0</span> Premium</span>
+                </p>
+            </div>
+            
+            <!-- Meal Cards Grid -->
+            <section class="meals-grid" id="meals-grid" aria-label="Meal cards">
+                <!-- Cards will be inserted here by JavaScript -->
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <p>Loading delicious recipes...</p>
+                </div>
+            </section>
+            
+            <!-- Empty State -->
+            <div class="empty-state-container" id="empty-state" style="display: none;">
+                <div class="empty-icon">🍽️</div>
+                <h3>No meals found</h3>
+                <p>Try adjusting your filters to see more recipes</p>
+            </div>
+            
+        </div>
+    </main>
+    
+    <!-- Bottom Tab Navigation -->
+    <nav class="bottom-tabs" aria-label="Main navigation">
+        <a href="dashboard.html" class="tab-item" aria-label="Dashboard" title="Dashboard">
+            <span class="tab-icon">🏠</span>
+        </a>
+        
+        <a href="meals.html" class="tab-item active" aria-label="Meals" title="Meals">
+            <span class="tab-icon">🍳</span>
+        </a>
+        
+        <a href="study.html" class="tab-item" aria-label="Study" title="Study">
+            <span class="tab-icon">📚</span>
+        </a>
+        
+        <a href="cleaning.html" class="tab-item" aria-label="Cleaning" title="Cleaning">
+            <span class="tab-icon">🧹</span>
+        </a>
+        
+        <a href="budget.html" class="tab-item" aria-label="Budget" title="Budget">
+            <span class="tab-icon">💰</span>
+        </a>
+        
+        <a href="diy.html" class="tab-item" aria-label="DIY" title="DIY">
+            <span class="tab-icon">🔧</span>
+        </a>
+        
+        <a href="support.html" class="tab-item" aria-label="Support" title="Support">
+            <span class="tab-icon">💚</span>
+        </a>
+        
+        <a href="legal.html" class="tab-item" aria-label="Legal" title="Legal">
+            <span class="tab-icon">⚖️</span>
+        </a>
+        
+        <a href="uni-essentials.html" class="tab-item" aria-label="Uni Essentials" title="Uni Essentials">
+            <span class="tab-icon">🎒</span>
+        </a>
+    </nav>
+    
+    <!-- JavaScript -->
+    <script src="../js/utils.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/auth.js"></script>
+    <script src="../js/components/cards.js"></script>
+    <script src="../js/features/gamification.js"></script>
+    <script src="../js/pages/meals.js"></script>
+</body>
+</html>
